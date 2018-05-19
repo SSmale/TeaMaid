@@ -1,0 +1,119 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "tea maid",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "GetOrderIntent",
+          "slots": [
+            {
+              "name": "beverage",
+              "type": "Beverage",
+              "samples": ["brew", "can", "coffee", "tea"]
+            },
+            {
+              "name": "name",
+              "type": "AMAZON.GB_FIRST_NAME"
+            }
+          ],
+          "samples": [
+            "how {name} has thier {beverage}",
+            "how does {name} take their {beverage}",
+            "I need a {beverage} for {name}",
+            "how do I make {beverage} for {name}",
+            "how does {name} have their {beverage}",
+            "{beverage} for {name}"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "Beverage",
+          "values": [
+            {
+              "name": {
+                "value": "can"
+              }
+            },
+            {
+              "name": {
+                "value": "coffee"
+              }
+            },
+            {
+              "name": {
+                "value": "tea",
+                "synonyms": ["cuppa", "brew"]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "GetOrderIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "beverage",
+              "type": "Beverage",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.121594664940.1286440431890"
+              }
+            },
+            {
+              "name": "name",
+              "type": "AMAZON.GB_FIRST_NAME",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.121594664940.208039638069"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.121594664940.1286440431890",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "I need a drink type"
+          },
+          {
+            "type": "PlainText",
+            "value": "and what drink do they want?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.121594664940.208039638069",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "and who is that for?"
+          }
+        ]
+      }
+    ]
+  }
+}
