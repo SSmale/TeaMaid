@@ -1,4 +1,4 @@
-module.exports.getOrder = {
+module.exports = {
   makeArray: payload => {
     const members = payload.val();
     let all = [];
@@ -13,6 +13,12 @@ module.exports.getOrder = {
       all.push(item);
     }
     return all;
+  },
+  duplicateFirstName: (array, userName) => {
+    const filter = array.filter(
+      user => user.name.split(" ")[0].toLowerCase() == userName.toLowerCase()
+    );
+    return filter.count >= 2 ? true : false;
   }
 };
 

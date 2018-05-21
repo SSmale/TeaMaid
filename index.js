@@ -1,6 +1,7 @@
 "use strict";
 const Alexa = require("alexa-sdk");
 const firebase = require("firebase");
+const getOrder = require("./controllers/getOrder.js");
 
 var config = {
   apiKey: "AIzaSyCl1z0z-NiAkQLH9bbOszSfqn0ZI1zrjlY",
@@ -39,19 +40,8 @@ const handlers = {
       .ref(`teams/${team}`)
       .once("value")
       .then(payload => {
-        const members = payload.val();
-        let all = [];
+        const all = getOrder.makeArray(payload);
 
-        for (let name in members) {
-          let item = {};
-          item.name = name;
-          let z = members[name];
-          for (let beverage in z) {
-            let v = z[beverage];
-            item[beverage] = v;
-          }
-          all.push(item);
-        }
         const user = all.find(x => x.name == userName);
         if (user) {
           speechOutput = `${userName} has their ${slotBeverage} ${
@@ -60,7 +50,6 @@ const handlers = {
         } else {
           speechOutput = "I cannot find a user by that name";
         }
-
         this.response.cardRenderer(SKILL_NAME, speechOutput);
         this.response.speak(speechOutput);
         this.emit(":responseReady");
