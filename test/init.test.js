@@ -19,6 +19,33 @@ const payload = {
   }
 };
 
+const array = [
+  {
+    name: "dan gray",
+    coffee: "blue",
+    tea: "black"
+  },
+  {
+    name: "tim smith",
+    coffee: "blue",
+    tea: "black"
+  },
+  {
+    name: "tim",
+    coffee: "blue",
+    tea: "black"
+  },
+  {
+    name: "kayleigh chapman",
+    tea: "Black like her soul"
+  },
+  {
+    name: "dan webb",
+    coffee: "brown",
+    tea: "red"
+  }
+];
+
 describe("GetOrder", () => {
   describe("makeArray", () => {
     it("should return an array of users drink", () => {
@@ -42,32 +69,27 @@ describe("GetOrder", () => {
     });
   });
   describe("duplicateFirstName", () => {
-    const array = [
-      {
-        name: "dan gray",
-        coffee: "blue",
-        tea: "black"
-      },
-      {
-        name: "kayleigh chapman",
-        tea: "Black like her soul"
-      },
-      {
-        name: "dan webb",
-        coffee: "brown",
-        tea: "red"
-      }
-    ];
     it("should return false if no duplicate first name in array", () => {
       const result = getOrder.duplicateFirstName(array, "kayleigh");
       expect(result).to.be.false;
     });
     it("should return true if 2 or more users have the same first name", () => {
       const result = getOrder.duplicateFirstName(array, "dan");
-      expect(result).to.be.false;
+      expect(result).to.be.true;
+    });
+    it("should handle single names", () => {
+      const result = getOrder.duplicateFirstName(array, "tim");
+      expect(result).to.be.true;
     });
   });
   describe("userExists", () => {
-    it("should ");
+    it("should return true if user exists", () => {
+      const result = getOrder.userExist(array, "Tim");
+      expect(result).to.be.true;
+    });
+    it("should return flase if user doesn't exists", () => {
+      const result = getOrder.userExist(array, "Blake");
+      expect(result).to.be.false;
+    });
   });
 });
