@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
-    "watch": "mocha --compilers js:babel-core/register -w"
+    "watch": "mocha --compilers js:babel-core/register -w",
+    "postinstall":
+      "npm rebuild grpc --target=6.1.0 --target_arch=x64 --target_platform=linux --target_libc=glibc"
   },
   "author": "",
   "license": "ISC",
