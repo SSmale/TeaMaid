@@ -1,5 +1,5 @@
 "use strict";
-const Alexa = require("alexa-sdk");
+const Alexa = require("ask-sdk-v1adapter");
 const firebase = require("firebase");
 const getOrder = require("./controllers/getOrder.js");
 
@@ -135,6 +135,7 @@ const handlers = {
 
 exports.handler = function(event, context, callback) {
   const alexa = Alexa.handler(event, context, callback);
+  alexa.appId = "amzn1.ask.skill.49ab897f-5be0-4bb5-872b-5dfee380ff30";
   alexa.registerHandlers(handlers);
   alexa.execute();
 };

@@ -6,13 +6,14 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
     "watch": "mocha --compilers js:babel-core/register -w",
-    "postinstall":
-      "npm rebuild grpc --target=8.10.0 --target_arch=x64 --target_platform=linux --target_libc=glibc"
+    "postinstall": "npm rebuild grpc --target=8.10.0 --target_arch=x64 --target_platform=linux --target_libc=glibc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "alexa-sdk": "^1.0.25",
+    "ask-sdk": "^2.0.5",
+    "ask-sdk-v1adapter": "^2.0.5",
     "firebase": "^5.0.3"
   },
   "devDependencies": {
