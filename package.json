@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
     "watch": "mocha --compilers js:babel-core/register -w",
-    "postinstall": "npm rebuild grpc --target=8.10.0 --target_arch=x64 --target_platform=linux --target_libc=glibc"
+    "postinstall":
+      "npm rebuild grpc --target=8.10.0 --target_arch=x64 --target_platform=linux --target_libc=glibc",
+    "zip": "zip function.zip package.json *.js node_modules controllers -r"
   },
   "author": "",
   "license": "ISC",
