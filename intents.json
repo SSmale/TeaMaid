@@ -20,27 +20,44 @@
           "slots": [
             {
               "name": "beverage",
-              "type": "Beverage",
+              "type": "CUSTOM_beverage",
               "samples": ["brew", "can", "coffee", "tea"]
             },
             {
-              "name": "name",
+              "name": "firstName",
               "type": "AMAZON.GB_FIRST_NAME"
+            },
+            {
+              "name": "lastName",
+              "type": "CUSTOM_lastName"
             }
           ],
           "samples": [
-            "how {name} has thier {beverage}",
-            "how does {name} take their {beverage}",
-            "I need a {beverage} for {name}",
-            "how do I make {beverage} for {name}",
-            "how does {name} have their {beverage}",
-            "{beverage} for {name}"
+            "I need a {beverage} for {firstName} {lastName}",
+            "how {firstName} {lastName} has their {beverage}",
+            "how does {firstName} {lastName} have their {beverage}",
+            "how {firstName} has thier {beverage}",
+            "how does {firstName} take their {beverage}",
+            "I need a {beverage} for {firstName}",
+            "how do I make {beverage} for {firstName}",
+            "how does {firstName} have their {beverage}",
+            "{beverage} for {firstName}"
           ]
+        },
+        {
+          "name": "LastNameIntent",
+          "slots": [
+            {
+              "name": "lastName",
+              "type": "CUSTOM_lastName"
+            }
+          ],
+          "samples": ["{lastName}"]
         }
       ],
       "types": [
         {
-          "name": "Beverage",
+          "name": "CUSTOM_beverage",
           "values": [
             {
               "name": {
@@ -59,6 +76,176 @@
               }
             }
           ]
+        },
+        {
+          "name": "CUSTOM_lastName",
+          "values": [
+            {
+              "name": {
+                "value": "Gunnel"
+              }
+            },
+            {
+              "name": {
+                "value": "Greenwood"
+              }
+            },
+            {
+              "name": {
+                "value": "Campbell"
+              }
+            },
+            {
+              "name": {
+                "value": "Geddes"
+              }
+            },
+            {
+              "name": {
+                "value": "Spooner"
+              }
+            },
+            {
+              "name": {
+                "value": "Walker"
+              }
+            },
+            {
+              "name": {
+                "value": "Anderson"
+              }
+            },
+            {
+              "name": {
+                "value": "Andrews"
+              }
+            },
+            {
+              "name": {
+                "value": "Watson"
+              }
+            },
+            {
+              "name": {
+                "value": "Fisher"
+              }
+            },
+            {
+              "name": {
+                "value": "Green"
+              }
+            },
+            {
+              "name": {
+                "value": "Bayliss"
+              }
+            },
+            {
+              "name": {
+                "value": "Watts"
+              }
+            },
+            {
+              "name": {
+                "value": "Gibbs"
+              }
+            },
+            {
+              "name": {
+                "value": "Wilkinson"
+              }
+            },
+            {
+              "name": {
+                "value": "Jonhston"
+              }
+            },
+            {
+              "name": {
+                "value": "Crouch"
+              }
+            },
+            {
+              "name": {
+                "value": "Mieneck"
+              }
+            },
+            {
+              "name": {
+                "value": "Granger"
+              }
+            },
+            {
+              "name": {
+                "value": "Potter"
+              }
+            },
+            {
+              "name": {
+                "value": "Webb"
+              }
+            },
+            {
+              "name": {
+                "value": "Windsor"
+              }
+            },
+            {
+              "name": {
+                "value": "Thatcher"
+              }
+            },
+            {
+              "name": {
+                "value": "Weston"
+              }
+            },
+            {
+              "name": {
+                "value": "Doe"
+              }
+            },
+            {
+              "name": {
+                "value": "Smith"
+              }
+            },
+            {
+              "name": {
+                "value": "Tomey"
+              }
+            },
+            {
+              "name": {
+                "value": "Simpson"
+              }
+            },
+            {
+              "name": {
+                "value": "Whiting"
+              }
+            },
+            {
+              "name": {
+                "value": "Curtis"
+              }
+            },
+            {
+              "name": {
+                "value": "Chapman"
+              }
+            },
+            {
+              "name": {
+                "value": "Smale"
+              }
+            },
+            {
+              "name": {
+                "value": "Gray"
+              }
+            }
+          ]
         }
       ]
     },
@@ -71,7 +258,7 @@
           "slots": [
             {
               "name": "beverage",
-              "type": "Beverage",
+              "type": "CUSTOM_beverage",
               "confirmationRequired": false,
               "elicitationRequired": true,
               "prompts": {
@@ -79,13 +266,20 @@
               }
             },
             {
-              "name": "name",
+              "name": "firstName",
               "type": "AMAZON.GB_FIRST_NAME",
               "confirmationRequired": false,
               "elicitationRequired": true,
               "prompts": {
                 "elicitation": "Elicit.Slot.121594664940.208039638069"
               }
+            },
+            {
+              "name": "lastName",
+              "type": "CUSTOM_lastName",
+              "confirmationRequired": false,
+              "elicitationRequired": false,
+              "prompts": {}
             }
           ]
         }
