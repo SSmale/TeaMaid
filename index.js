@@ -16,9 +16,9 @@ const SKILL_NAME = "TeaMaid";
 const HELP_MESSAGE =
   "Ask me how NAME has their BEVERAGE and I can look that up for you... What can I help you with?";
 const HELP_REPROMPT = "What can I help you with?";
-const FALLBACK_MESSAGE =
+const FarrayBACK_MESSAGE =
   "I can't help you with that.  I can look up how someone has their beverage. What can I help you with?";
-const FALLBACK_REPROMPT = "What can I help you with?";
+const FarrayBACK_REPROMPT = "What can I help you with?";
 const STOP_MESSAGE = "Goodbye!";
 
 const LaunchHandler = {
@@ -60,10 +60,11 @@ const GetOrderIntent = {
         .database()
         .ref(`teams/${team}`)
         .once("value");
-      const all = getOrder.makeArray(store);
+      const array = getOrder.makeArray(store);
 
-      if (getOrder.userExist(all, firstName)) {
-        if (getOrder.duplicateFirstName(all, firstName) && !lastName) {
+      if (getOrder.userExist(array, firstName)) {
+        const user = getOrder.getUser(array, firstName, lastName);
+        if (user.length > 1) {
           handlerInput.attributesManager.setSessionAttributes({
             firstName,
             beverage: slotBeverage
@@ -73,23 +74,19 @@ const GetOrderIntent = {
             .speak("I need a last name to find your answer? What is it?")
             .reprompt("What is their last name?")
             .getResponse();
-        } else if (getOrder.duplicateFirstName(all, firstName) && lastName) {
-          user = all.find(
-            x =>
-              x.name.split(" ")[0].toLowerCase() == firstName.toLowerCase() &&
-              x.name.split(" ")[1].toLowerCase() == lastName.toLowerCase()
-          );
-        } else {
-          user = all.find(
-            x => x.name.split(" ")[0].toLowerCase() == firstName.toLowerCase()
-          );
         }
-        if (user) {
+        if (user[slotBeverage]) {
           speechOutput = `${user.name} has their ${slotBeverage} ${
             user[slotBeverage]
           }`;
         } else {
-          speechOutput = "I cannot find a user by that name";
+          speechOutput = `${
+            user.name
+          } doesn't have a ${slotBeverage} but has ${Object.keys(user)
+            .filter(x => x != "name")
+            .map(val => val)
+            .join(", ")
+            .replace(/,(?=[^,]*$)/, " or ")} instead`;
         }
       } else {
         speechOutput = "I cannot find a user by that name";
@@ -130,15 +127,15 @@ const LastNameIntent = {
     let team = "team1";
 
     try {
-      const all = getOrder.makeArray(
+      const array = getOrder.makeArray(
         await firebase
           .database()
           .ref(`teams/${team}`)
           .once("value")
       );
 
-      if (getOrder.duplicateFirstName(all, firstName) && lastName) {
-        user = all.find(
+      if (getOrder.duplicateFirstName(array, firstName) && lastName) {
+        user = array.find(
           x =>
             x.name.split(" ")[0].toLowerCase() == firstName.toLowerCase() &&
             x.name.split(" ")[1].toLowerCase() == lastName.toLowerCase()
@@ -154,7 +151,7 @@ const LastNameIntent = {
       }
     } catch (error) {
       speechOutput =
-        "I am really sorry. I am unable to access part of my memory. Please try again later";
+        "I am rearrayy sorry. I am unable to access part of my memory. Please try again later";
       console.log(
         `Intent: ${
           handlerInput.requestEnvelope.request.intent.name
@@ -184,18 +181,18 @@ const HelpHandler = {
   }
 };
 
-const FallbackHandler = {
+const FarraybackHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
     return (
       request.type === "IntentRequest" &&
-      request.intent.name === "AMAZON.FallbackIntent"
+      request.intent.name === "AMAZON.FarraybackIntent"
     );
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak(FALLBACK_MESSAGE)
-      .reprompt(FALLBACK_REPROMPT)
+      .speak(FarrayBACK_MESSAGE)
+      .reprompt(FarrayBACK_REPROMPT)
       .getResponse();
   }
 };
@@ -253,7 +250,7 @@ exports.handler = skillBuilder
     LastNameIntent,
     HelpHandler,
     ExitHandler,
-    FallbackHandler,
+    FarraybackHandler,
     SessionEndedRequestHandler
   )
   .addErrorHandlers(ErrorHandler)
@@ -274,15 +271,15 @@ exports.handler = skillBuilder
 //     let speechOutput = "error";
 //     let user;
 //     let team = "team1";
-//     const all = getOrder.makeArray(
+//     const array = getOrder.makeArray(
 //       await firebase
 //         .database()
 //         .ref(`teams/${team}`)
 //         .once("value")
 //     );
 
-//     if (getOrder.duplicateFirstName(all, firstName) && lastName) {
-//       user = all.find(
+//     if (getOrder.duplicateFirstName(array, firstName) && lastName) {
+//       user = array.find(
 //         x =>
 //           x.name.split(" ")[0].toLowerCase() == firstName.toLowerCase() &&
 //           x.name.split(" ")[1].toLowerCase() == lastName.toLowerCase()
@@ -309,15 +306,15 @@ exports.handler = skillBuilder
 //     let speechOutput = "error";
 //     let user;
 //     let team = "team1";
-//     const all = getOrder.makeArray(
+//     const array = getOrder.makeArray(
 //       await firebase
 //         .database()
 //         .ref(`teams/${team}`)
 //         .once("value")
 //     );
 
-//     if (getOrder.userExist(all, firstName)) {
-//       if (getOrder.duplicateFirstName(all, firstName) && !lastName) {
+//     if (getOrder.userExist(array, firstName)) {
+//       if (getOrder.duplicateFirstName(array, firstName) && !lastName) {
 //         this.event.session.attributes["args"] = {
 //           firstName,
 //           beverage: slotBeverage
@@ -328,14 +325,14 @@ exports.handler = skillBuilder
 //           .listen("What is their last name?");
 //         this.emit(":responseReady");
 //         return;
-//       } else if (getOrder.duplicateFirstName(all, firstName) && lastName) {
-//         user = all.find(
+//       } else if (getOrder.duplicateFirstName(array, firstName) && lastName) {
+//         user = array.find(
 //           x =>
 //             x.name.split(" ")[0].toLowerCase() == firstName.toLowerCase() &&
 //             x.name.split(" ")[1].toLowerCase() == lastName.toLowerCase()
 //         );
 //       } else {
-//         user = all.find(
+//         user = array.find(
 //           x => x.name.split(" ")[0].toLowerCase() == firstName.toLowerCase()
 //         );
 //       }
@@ -370,8 +367,8 @@ exports.handler = skillBuilder
 //   }
 // };
 
-// exports.handler = function(event, context, callback) {
-//   const alexa = Alexa.handler(event, context, callback);
+// exports.handler = function(event, context, carrayback) {
+//   const alexa = Alexa.handler(event, context, carrayback);
 //   alexa.appId = "amzn1.ask.skill.49ab897f-5be0-4bb5-872b-5dfee380ff30";
 //   alexa.registerHandlers(handlers);
 //   alexa.execute();
