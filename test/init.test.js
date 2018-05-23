@@ -92,4 +92,36 @@ describe("GetOrder", () => {
       expect(result).to.be.false;
     });
   });
+  describe("getUser", () => {
+    it("should return a user from an array", () => {
+      const result = getOrder.getUser(array, "Kayleigh");
+      expect(result).to.deep.equal({
+        name: "kayleigh chapman",
+        tea: "Black like her soul"
+      });
+    });
+    it("should get user with first & last name", () => {
+      const result = getOrder.getUser(array, "Dan", "Webb");
+      expect(result).to.deep.equal({
+        name: "dan webb",
+        coffee: "brown",
+        tea: "red"
+      });
+    });
+    it("return array if more than one user", () => {
+      const result = getOrder.getUser(array, "Dan");
+      expect(result).to.deep.equal([
+        {
+          name: "dan gray",
+          coffee: "blue",
+          tea: "black"
+        },
+        {
+          name: "dan webb",
+          coffee: "brown",
+          tea: "red"
+        }
+      ]);
+    });
+  });
 });

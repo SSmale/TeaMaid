@@ -25,5 +25,19 @@ module.exports = {
       user => user.name.split(" ")[0].toLowerCase() == userName.toLowerCase()
     );
     return filter ? true : false;
+  },
+  getUser: (array, firstName, lastName = null) => {
+    if (lastName) {
+      return array.find(
+        x =>
+          x.name.split(" ")[0].toLowerCase() == firstName.toLowerCase() &&
+          x.name.split(" ")[1].toLowerCase() == lastName.toLowerCase()
+      );
+    } else {
+      const filteredArray = array.filter(
+        x => x.name.split(" ")[0].toLowerCase() == firstName.toLowerCase()
+      );
+      return filteredArray.length >= 2 ? filteredArray : filteredArray[0];
+    }
   }
 };
