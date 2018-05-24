@@ -86,7 +86,7 @@ const GetOrderIntent = {
             .filter(x => x != "name")
             .map(val => val)
             .join(", ")
-            .replace(/,(?=[^,]*$)/, " or ")} instead`;
+            .replace(/,(?=[^,]*$)/, " or")} instead`;
         }
       } else {
         speechOutput = "I cannot find a user by that name";
